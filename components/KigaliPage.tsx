@@ -9,7 +9,7 @@ interface KigaliPageProps {
 }
 
 const KigaliAttractionCard: React.FC<{ attraction: KigaliAttraction }> = ({ attraction }) => (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col border-2 border-transparent hover:border-blue-500 transition-all duration-300 transform hover:-translate-y-1">
         <img src={attraction.imageUrl} alt={attraction.name} className="w-full h-56 object-cover" />
         <div className="p-6 flex flex-col flex-grow">
             <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-1">{attraction.category}</p>
@@ -21,9 +21,9 @@ const KigaliAttractionCard: React.FC<{ attraction: KigaliAttraction }> = ({ attr
                   href={attraction.officialLink} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-blue-600 font-semibold hover:underline group inline-block"
                 >
-                  Learn More <i className="fas fa-arrow-right text-xs"></i>
+                  Learn More <i className="fas fa-arrow-right text-xs transform group-hover:translate-x-1 transition-transform"></i>
                 </a>
               </div>
             )}

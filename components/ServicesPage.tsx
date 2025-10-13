@@ -106,7 +106,7 @@ const ServiceDetail: React.FC<{ service: Service }> = ({ service }) => (
                 href={service.officialLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 font-semibold transition-colors shadow-md"
+                className="inline-block bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-3 rounded-full hover:shadow-lg hover:scale-105 transform font-semibold transition-all duration-300 shadow-md"
             >
                 Go to Official Website <i className="fas fa-external-link-alt ml-2"></i>
             </a>
@@ -216,7 +216,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ navigateTo, searchTerm: ini
                         <div 
                             key={service.id} 
                             onClick={() => setSelectedService(service)}
-                            className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 ease-in-out cursor-pointer"
+                            className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 ease-in-out cursor-pointer border-2 border-transparent hover:border-blue-500"
                         >
                             <h3 className="text-xl font-bold text-gray-800 mb-2">{service.name}</h3>
                             <p className="text-gray-600">{service.description}</p>
@@ -233,7 +233,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ navigateTo, searchTerm: ini
         )}
 
         <div className="text-center mt-12">
-            <button onClick={() => navigateTo('tourism')} className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 font-semibold transition-colors">
+            <button onClick={() => navigateTo('tourism')} className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-3 rounded-full hover:shadow-lg hover:scale-105 transform font-semibold transition-all duration-300">
                 Explore Tourism &rarr;
             </button>
         </div>

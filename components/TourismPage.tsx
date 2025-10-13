@@ -30,7 +30,7 @@ const AttractionDetail: React.FC<{ attraction: Attraction }> = ({ attraction }) 
                     href={attraction.officialLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 font-semibold transition-colors shadow-md"
+                    className="inline-block bg-gradient-to-r from-green-600 to-green-500 text-white px-8 py-3 rounded-full hover:shadow-lg hover:scale-105 transform font-semibold transition-all duration-300 shadow-md"
                 >
                     Learn More & Book <i className="fas fa-external-link-alt ml-2"></i>
                 </a>
@@ -41,7 +41,7 @@ const AttractionDetail: React.FC<{ attraction: Attraction }> = ({ attraction }) 
 
 const AttractionCard: React.FC<{ attraction: Attraction; onClick: () => void; }> = ({ attraction, onClick }) => (
     <div 
-      className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 ease-in-out cursor-pointer h-full flex flex-col"
+      className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 ease-in-out cursor-pointer h-full flex flex-col border-2 border-transparent hover:border-green-500"
       onClick={onClick}
     >
         <img src={attraction.imageUrl} alt={attraction.name} className="w-full h-56 object-cover" />
@@ -172,7 +172,7 @@ const TourismPage: React.FC<TourismPageProps> = ({ navigateTo }) => {
         </section>
 
         <div className="text-center mt-20">
-            <button onClick={() => navigateTo('services')} className="bg-white text-blue-600 px-8 py-3 rounded-full hover:bg-gray-100 font-semibold transition-colors shadow-md">
+            <button onClick={() => navigateTo('services')} className="bg-white text-blue-600 px-8 py-3 rounded-full hover:bg-gray-100 font-semibold transition-all duration-300 shadow-md border hover:shadow-lg hover:scale-105 transform">
                 &larr; View Government Services
             </button>
         </div>

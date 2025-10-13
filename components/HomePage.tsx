@@ -7,10 +7,10 @@ interface HomePageProps {
 
 const FeatureCard: React.FC<{ icon: string; title: string; description: string; onClick: () => void }> = ({ icon, title, description, onClick }) => (
     <div 
-      className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-transform duration-300 ease-in-out cursor-pointer"
+      className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out cursor-pointer border-2 border-transparent hover:border-blue-500 group"
       onClick={onClick}
     >
-        <div className="text-4xl text-blue-600 mb-4"><i className={`fas ${icon}`}></i></div>
+        <div className="text-4xl text-blue-600 mb-4 inline-block p-3 rounded-full bg-blue-50 group-hover:bg-blue-100 transition-colors duration-300"><i className={`fas ${icon}`}></i></div>
         <h3 className="text-2xl font-bold text-gray-800 mb-2">{title}</h3>
         <p className="text-gray-600">{description}</p>
     </div>
@@ -46,7 +46,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigateTo }) => {
                   className="w-full bg-transparent text-white placeholder-gray-300 px-4 py-2 border-none focus:ring-0"
                   aria-label="Search for a service"
                 />
-                <button type="submit" className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition-colors">
+                <button type="submit" className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg hover:scale-105 transform transition-all duration-300">
                   Search
                 </button>
               </div>
