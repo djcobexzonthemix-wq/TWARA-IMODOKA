@@ -1,85 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import HomePage from './components/HomePage';
-import LawCategoriesPage from './components/LawCategoriesPage';
-import LawCategoryPage from './components/LawCategoryPage';
-import QuizPage from './components/QuizPage';
-import ResultsPage from './components/ResultsPage';
-import { LawCategory, QuizResult, Page } from './types';
+import ServicesPage from './components/ServicesPage';
+import TourismPage from './components/TourismPage';
+import KigaliPage from './components/KigaliPage';
+import FloatingHelpButton from './components/FloatingHelpButton';
 
-// Simplified Page type to remove sign-related pages
-export type AppState = 'home' | 'lawCategories' | 'lawCategoryDetail' | 'quiz' | 'results';
+// Fix: Defining the Page type for navigation.
+export type Page = 'home' | 'services' | 'tourism' | 'kigali';
 
-const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<AppState>('home');
-  const [selectedLawCategory, setSelectedLawCategory] = useState<LawCategory | null>(null);
-  const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
-  const [quizScores, setQuizScores] = useState<QuizResult[]>([]);
+function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [pageProps, setPageProps] = useState<object>({});
 
-  useEffect(() => {
-    try {
-      const storedScores = localStorage.getItem('quizScores');
-      if (storedScores) {
-        setQuizScores(JSON.parse(storedScores));
-      }
-    } catch (error) {
-      console.error("Failed to parse quiz scores from localStorage", error);
-    }
-  }, []);
-  
-  const handleQuizComplete = (result: QuizResult) => {
-    setQuizResult(result);
-    const updatedScores = [...quizScores, result];
-    setQuizScores(updatedScores);
-    try {
-      localStorage.setItem('quizScores', JSON.stringify(updatedScores));
-    } catch (error) {
-       console.error("Failed to save quiz scores to localStorage", error);
-    }
-    setCurrentPage('results');
-  };
-
-  const navigate = (page: AppState) => {
+  const navigateTo = (page: Page, props: object = {}) => {
     setCurrentPage(page);
-    // Reset selections when going back to main menus
-    if (['home', 'lawCategories'].includes(page)) {
-      setSelectedLawCategory(null);
-      setQuizResult(null);
-    }
-  };
-  
-  const handleSelectLawCategory = (category: LawCategory) => {
-    setSelectedLawCategory(category);
-    navigate('lawCategoryDetail');
-  };
-
-  const handleStartQuiz = () => {
-    setQuizResult(null);
-    navigate('quiz');
+    setPageProps(props);
+    window.scrollTo(0, 0);
   };
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'lawCategories':
-        return <LawCategoriesPage onSelectCategory={handleSelectLawCategory} onBack={() => navigate('home')} />;
-      case 'lawCategoryDetail':
-        return selectedLawCategory ? <LawCategoryPage category={selectedLawCategory} onBack={() => navigate('lawCategories')} /> : null;
-      case 'quiz':
-        return <QuizPage onQuizComplete={handleQuizComplete} onBack={() => navigate('home')} />;
-      case 'results':
-        return quizResult ? <ResultsPage result={quizResult} onRetry={handleStartQuiz} onBack={() => navigate('lawCategories')} /> : null;
       case 'home':
+        return <HomePage navigateTo={navigateTo} />;
+      case 'services':
+        return <ServicesPage navigateTo={navigateTo} {...pageProps} />;
+      case 'tourism':
+        return <TourismPage navigateTo={navigateTo} />;
+      case 'kigali':
+        return <KigaliPage navigateTo={navigateTo} />;
       default:
-        return (
-          <HomePage
-            onNavigateToLaws={() => navigate('lawCategories')}
-            onNavigateToQuiz={handleStartQuiz}
-            quizScores={quizScores}
-          />
-        );
+        return <HomePage navigateTo={navigateTo} />;
     }
   };
 
-  return <div className="min-h-screen font-sans">{renderPage()}</div>;
-};
+  return (
+    <div className="flex flex-col min-h-screen font-sans">
+      <Header navigateTo={navigateTo} />
+      <main className="flex-grow">
+        {renderPage()}
+      </main>
+      <Footer />
+      <FloatingHelpButton />
+    </div>
+  );
+}
 
 export default App;

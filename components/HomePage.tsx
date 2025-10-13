@@ -1,66 +1,78 @@
 import React from 'react';
-import { QuizResult } from '../types';
+import { Page } from '../App';
 
 interface HomePageProps {
-  onNavigateToLaws: () => void;
-  onNavigateToQuiz: () => void;
-  quizScores: QuizResult[];
+  navigateTo: (page: Page, props?: object) => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigateToLaws, onNavigateToQuiz, quizScores }) => {
-  const averageScore = quizScores.length > 0
-    ? (quizScores.reduce((acc, result) => acc + (result.score / result.total), 0) / quizScores.length) * 100
-    : 0;
+const FeatureCard: React.FC<{ icon: string; title: string; description: string; onClick: () => void }> = ({ icon, title, description, onClick }) => (
+    <div 
+      className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-transform duration-300 ease-in-out cursor-pointer"
+      onClick={onClick}
+    >
+        <div className="text-4xl text-blue-600 mb-4"><i className={`fas ${icon}`}></i></div>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+    </div>
+);
+
+
+const HomePage: React.FC<HomePageProps> = ({ navigateTo }) => {
+  
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const searchTerm = formData.get('search') as string;
+    navigateTo('services', { searchTerm });
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-900">
-      <header className="bg-slate-800 text-white text-center p-6 shadow-lg">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-wider">TWARA IMODOKA APP</h1>
-        <p className="mt-2 text-md text-slate-300">Iga amategeko y'umuhanda mu Rwanda</p>
-      </header>
-
-      <main className="flex-grow p-4 sm:p-6 md:p-8">
-        <div className="max-w-md mx-auto">
-          <div className="space-y-6">
-            <button
-              onClick={onNavigateToLaws}
-              className="w-full bg-slate-800 p-6 rounded-lg shadow-md hover:shadow-teal-500/20 hover:shadow-lg hover:-translate-y-1 transform transition-all duration-300 text-left flex items-center space-x-4"
-            >
-              <i className="fas fa-gavel text-4xl text-teal-400 w-12 text-center"></i>
-              <div>
-                <h2 className="text-xl font-bold text-gray-100">Wige Amategeko y’Itwara ry’Imodoka</h2>
-                <p className="text-slate-400 text-sm">Sobanukirwa amategeko agenga umuhanda.</p>
+    <div className="bg-slate-50">
+      {/* Hero Section */}
+      <div 
+        className="relative bg-cover bg-center h-96" 
+        style={{ backgroundImage: "url('https://i.imgur.com/pBGMBMi.png')" }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="text-center text-white px-4 w-full max-w-3xl">
+            <h1 className="text-4xl md:text-6xl font-bold">Your Trusted Guide to Rwanda</h1>
+            <p className="mt-4 text-lg md:text-xl">Step-by-step guidance for visitors and residents. We simplify official processes so you can explore our beautiful nation with ease.</p>
+            <form className="mt-8 max-w-xl mx-auto" onSubmit={handleSearch}>
+              <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full p-2 border border-white/30">
+                <input 
+                  type="search" 
+                  name="search"
+                  placeholder="Search for a service (e.g., 'visa', 'business')"
+                  className="w-full bg-transparent text-white placeholder-gray-300 px-4 py-2 border-none focus:ring-0"
+                  aria-label="Search for a service"
+                />
+                <button type="submit" className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition-colors">
+                  Search
+                </button>
               </div>
-            </button>
-             <button
-              onClick={onNavigateToQuiz}
-              className="w-full bg-teal-500 text-white p-6 rounded-lg shadow-lg hover:bg-teal-600 transform hover:scale-105 transition-all duration-300 text-left flex items-center space-x-4"
-            >
-              <i className="fas fa-question-circle text-4xl w-12 text-center"></i>
-              <div>
-                <h2 className="text-xl font-bold">Kora Ikizamini</h2>
-                <p className="opacity-90 text-sm">Isuzume ubumenyi bwawe.</p>
-              </div>
-            </button>
+            </form>
           </div>
-
-          {quizScores.length > 0 && (
-            <div className="mt-8 bg-slate-800 p-6 rounded-lg shadow-md">
-              <h2 className="text-xl font-bold text-gray-100 mb-4">Iterambere Ryawe</h2>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-slate-400 text-sm">Amanota yo hagati:</p>
-                  <p className="text-3xl font-bold text-teal-400">{averageScore.toFixed(0)}%</p>
-                </div>
-                <div>
-                  <p className="text-slate-400 text-sm">Ibipimo wakoze:</p>
-                  <p className="text-3xl font-bold text-teal-400">{quizScores.length}</p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
-      </main>
+      </div>
+
+      {/* Features Section */}
+      <div className="container mx-auto px-6 py-16">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">How can we help you today?</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+          <FeatureCard 
+            icon="fa-briefcase" 
+            title="Essential Services"
+            description="Find step-by-step guidance on visas, work permits, business registration, and more."
+            onClick={() => navigateTo('services')} 
+          />
+          <FeatureCard 
+            icon="fa-map-signs"
+            title="Discover Our Nation"
+            description="Explore our rich culture, stunning landscapes, and world-famous tourist attractions."
+            onClick={() => navigateTo('tourism')}
+          />
+        </div>
+      </div>
     </div>
   );
 };

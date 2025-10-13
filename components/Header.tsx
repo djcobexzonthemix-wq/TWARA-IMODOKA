@@ -1,19 +1,23 @@
 import React from 'react';
+import { Page } from '../App';
 
 interface HeaderProps {
-  title: string;
-  onBack?: () => void;
+  navigateTo: (page: Page, props?: object) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, onBack }) => {
+const Header: React.FC<HeaderProps> = ({ navigateTo }) => {
   return (
-    <header className="bg-teal-600 text-white p-4 shadow-lg sticky top-0 z-10 flex items-center">
-      {onBack && (
-        <button onClick={onBack} className="text-white text-2xl mr-4 hover:bg-teal-700 p-2 rounded-full transition-colors">
-          <i className="fas fa-arrow-left"></i>
+    <header className="bg-white shadow-md sticky top-0 z-40">
+      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <button onClick={() => navigateTo('home')} className="text-2xl font-bold text-blue-600">
+          Loved Visitors
         </button>
-      )}
-      <h1 className="text-xl font-bold">{title}</h1>
+        <div className="flex items-center space-x-6">
+          <button onClick={() => navigateTo('home')} className="text-gray-600 hover:text-blue-600">Home</button>
+          <button onClick={() => navigateTo('services')} className="text-gray-600 hover:text-blue-600">Services</button>
+          <button onClick={() => navigateTo('kigali')} className="text-gray-600 hover:text-blue-600">Explore Kigali</button>
+        </div>
+      </nav>
     </header>
   );
 };
