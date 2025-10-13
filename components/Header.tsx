@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ navigateTo }) => {
     <header className="bg-white shadow-md sticky top-0 z-40">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         <button onClick={() => navigateTo('home')} className="text-2xl font-bold text-blue-600">
-          Loved Visitors
+          Rwanda Guide Pro
         </button>
         <div className="flex items-center space-x-6">
           <button onClick={() => navigateTo('home')} className="text-gray-600 hover:text-blue-600">Home</button>

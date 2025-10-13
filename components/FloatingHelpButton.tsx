@@ -7,7 +7,7 @@ interface Message {
 
 const LiveChatWidget = ({ onClose }: { onClose: () => void }) => {
   const [messages, setMessages] = useState<Message[]>([
-    { text: 'Welcome to Loved Visitors support! How can I help you today?', sender: 'agent' }
+    { text: 'Welcome to Rwanda Guide Pro support! How can I help you today?', sender: 'agent' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const chatContainerRef = useRef<HTMLDivElement>(null);
